@@ -1,0 +1,78 @@
+{
+  "generated_from": "Sadie Research HQ",
+  "generated_at": "2026-09-27",
+  "items": [
+    {
+      "id": "SRC-25",
+      "priority": "P0",
+      "kind": "archive_media",
+      "target": "Ep_20-QuickTime_H.264.mov",
+      "notes": "Broadway.com Show Ep.20; exact filename known; recover actual bytes or archive/CDN evidence.",
+      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+    },
+    {
+      "id": "SRC-28",
+      "priority": "P0",
+      "kind": "archive_media",
+      "target": "Ep_22-QuickTime_H.264.mov",
+      "notes": "Broadway.com Show Ep.22; exact filename known; recover actual bytes or archive/CDN evidence.",
+      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+    },
+    {
+      "id": "SRC-44",
+      "priority": "P0",
+      "kind": "archive_media",
+      "target": "12GSRS094YW79MDL",
+      "notes": "TV Insider historical Waywire ID; recover player/API/media payload.",
+      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+    },
+    {
+      "id": "SRC-48",
+      "priority": "P0",
+      "kind": "archive_media",
+      "target": "2867948",
+      "notes": "BroadwayWorld/NBC Bug Out historical video ID; recover media object.",
+      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+    },
+    {
+      "id": "TASK-32",
+      "priority": "P0",
+      "kind": "archive_page",
+      "target": "NewYork.com 56345 A Day in the Life Sadie Sink",
+      "notes": "Recover original body/assets; first eligible Common Crawl target CC-MAIN-2013-48.",
+      "notion": "https://app.notion.com/p/3d032a84beec813cbf2dd0899cf89118"
+    },
+    {
+      "id": "TASK-272-SRC-354",
+      "priority": "P1",
+      "kind": "video",
+      "url": "https://www.youtube.com/watch?v=9aVMqQffD4s",
+      "notes": "Tonight Show / You Read My Mind. Acquire captions/audio/transcript only from public surface.",
+      "notion": "https://app.notion.com/p/3ce32a84beec8120a400d980e3eee96a"
+    },
+    {
+      "id": "HUM-3",
+      "priority": "P1",
+      "kind": "video",
+      "url": "https://www.giants.com/video/eli-s-extras-sadie-sink-taylor-swift-music-video-eli-manning-bake-off",
+      "notes": "Agent-owned. Recover playable/captioned manifestation and transcript/timestamps.",
+      "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f"
+    },
+    {
+      "id": "CAN-91",
+      "priority": "P1",
+      "kind": "image",
+      "url": "https://i2.hdslb.com/bfs/storyff/_00002q0kg61hrm8y5299pt2hu9ynxsb_firsti.jpg",
+      "notes": "Exact Bilibili first frame; prior runtime hit 403. Recover pixels and metadata only.",
+      "notion": "https://app.notion.com/p/3d532a84beec818a8ae1dbae610ca38e"
+    },
+    {
+      "id": "HUM-12",
+      "priority": "P1",
+      "kind": "page",
+      "url": "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567",
+      "notes": "Do not treat a failed request as negative. Seek image-bearing alternate object/raw thumbnail/archive route.",
+      "notion": "https://app.notion.com/p/3cc32a84beec810ba3e6efc57374c64f"
+    }
+  ]
+}
