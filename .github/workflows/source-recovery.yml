@@ -7,6 +7,11 @@ on:
       - "queue/recovery_queue.json"
       - "scripts/recover.py"
       - ".github/workflows/source-recovery.yml"
+  pull_request:
+    paths:
+      - "queue/recovery_queue.json"
+      - "scripts/recover.py"
+      - ".github/workflows/source-recovery.yml"
 
 permissions:
   contents: read
