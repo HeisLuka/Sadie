@@ -20,8 +20,8 @@
       "payload_files": [
         {
           "path": "recovery/HUM-3/direct_0.html",
-          "bytes": 437528,
-          "sha256": "92d4e3e9d978b1b7e5d379e940d962845178cbeb7bc33bc0bc53dc16740db1df",
+          "bytes": 437671,
+          "sha256": "a6c21a7534bf3d7b97decfe1125f3bfe11a58b126c3c6b816778752265d9d117",
           "mime": "text/html"
         },
         {
@@ -44,14 +44,14 @@
         },
         {
           "path": "recovery/HUM-3/subtitle.en.m3u8",
-          "bytes": 25015,
-          "sha256": "9804df2a72fda9411fac8f33053b96a2b40960674849311f8964e7c94c098118",
+          "bytes": 30601,
+          "sha256": "73b9ecaf6f7b59d3932cb97026926a05d6ec8dcd9e202141854d6faa69ac5f3c",
           "mime": "text/plain"
         },
         {
           "path": "recovery/HUM-3/subtitle.en.segments.json",
-          "bytes": 44445,
-          "sha256": "f57e98206b62a3eb55ad704ff40b053ac9ba2dd57c9cd905bf0d080d5ffc268b",
+          "bytes": 50031,
+          "sha256": "58d4eb093ca1830ba9020cecf3b6f7ce0aae28f61bb8c6aa767c2b6c0ce7fdb3",
           "mime": "application/json"
         }
       ]

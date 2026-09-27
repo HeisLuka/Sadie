@@ -1,4 +1,4 @@
-recovery/HUM-3/direct_0.html 437528 bytes
+recovery/HUM-3/direct_0.html 437671 bytes
 recovery/HUM-3/direct_0.links.json 31885 bytes
 recovery/HUM-3/direct_0.meta.json 2449 bytes
 recovery/HUM-3/direct_0.text.txt 17468 bytes
@@ -10,7 +10,7 @@ recovery/HUM-3/media.en.vtt.ytdl 326 bytes
 recovery/HUM-3/media.salvaged.vtt 5743 bytes
 recovery/HUM-3/result.json 46878 bytes
 recovery/HUM-3/subtitle.en.full.salvaged.vtt 21654 bytes
-recovery/HUM-3/subtitle.en.m3u8 25015 bytes
+recovery/HUM-3/subtitle.en.m3u8 30601 bytes
 recovery/HUM-3/subtitle.en.segment-0000.vtt 274 bytes
 recovery/HUM-3/subtitle.en.segment-0001.vtt 65 bytes
 recovery/HUM-3/subtitle.en.segment-0002.vtt 202 bytes
@@ -144,7 +144,7 @@ recovery/HUM-3/subtitle.en.segment-0129.vtt 102 bytes
 recovery/HUM-3/subtitle.en.segment-0130.vtt 120 bytes
 recovery/HUM-3/subtitle.en.segment-0131.vtt 180 bytes
 recovery/HUM-3/subtitle.en.segment-0132.vtt 94 bytes
-recovery/HUM-3/subtitle.en.segments.json 44445 bytes
+recovery/HUM-3/subtitle.en.segments.json 50031 bytes
 recovery/MANIFEST.txt 0 bytes
 recovery/REPORT.md 520 bytes
 recovery/RUNNER_HEARTBEAT.txt 106 bytes
