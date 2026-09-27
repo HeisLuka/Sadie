@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import urllib.parse
 import urllib.request
+import html as html_module
 from pathlib import Path
 
 from bs4 import BeautifulSoup
@@ -154,6 +155,24 @@ def derive_file(path, out_dir, label=None):
     return result
 
 
+def salvage_partial_vtt(d):
+    """Repair/merge partial WebVTT left by yt-dlp when a provider subtitle fragment is malformed."""
+    parts = sorted(p for p in d.glob("media*.vtt*") if p.is_file() and not p.name.endswith(".ytdl"))
+    if not parts:
+        return None
+    chunks = []
+    for p in parts:
+        text = p.read_text(encoding="utf-8", errors="replace")
+        # Some NFL timed-text fragments contain 4-digit millisecond fields (e.g. 00:02:21.1000).
+        text = re.sub(r"(\d{2}:\d{2}:\d{2}\.)(\d{3})\d+(?=\s*-->|\s*$)", r"\1\2", text, flags=re.M)
+        chunks.append(text.replace("WEBVTT", "", 1).strip())
+    merged = "WEBVTT\n\n" + "\n\n".join(x for x in chunks if x) + "\n"
+    out = d / "media.salvaged.vtt"
+    out.write_text(merged, encoding="utf-8")
+    return {"path": str(out), "bytes": out.stat().st_size, "sha256": hash_file(out),
+            "parts": [str(p) for p in parts]}
+
+
 def direct_acquire(item, d):
     urls = ([item["url"]] if item.get("url") else []) + item.get("urls", [])
     out = []
@@ -184,7 +203,8 @@ def direct_acquire(item, d):
                 derived.append(derive_file(media_path, d, "ytdlp_" + safe(media_path.suffix)))
             except Exception as e:
                 derived.append({"path": str(media_path), "error": repr(e)})
-        out.append({"ytdlp": ytdlp, "derived": derived})
+        salvage = salvage_partial_vtt(d)
+        out.append({"ytdlp": ytdlp, "derived": derived, "subtitle_salvage": salvage})
     return out
 
 
@@ -290,6 +310,14 @@ def commoncrawl_query(index_id, pattern, d, pattern_index):
         result["query"] = meta
         for hit_index, hit in enumerate(parse_json_lines(data)[:MAX_ARCHIVE_HITS], start=1):
             saved = dict(hit)
+            # Wildcard archive indexes can occasionally return a host/root record that does not
+            # contain the requested distinctive token. Keep it as rejected metadata, never evidence.
+            distinctive = [x for x in re.findall(r"[A-Za-z0-9_-]{8,}", pattern) if x.lower() not in {"https", "http"}]
+            candidate_url = str(hit.get("url") or "")
+            if distinctive and not any(tok.lower() in candidate_url.lower() for tok in distinctive):
+                saved["rejected"] = "archive hit does not contain distinctive query token"
+                result["hits"].append(saved)
+                continue
             filename, offset, length = hit.get("filename"), hit.get("offset"), hit.get("length")
             if filename and offset is not None and length is not None:
                 try:
@@ -331,7 +359,8 @@ def archive_probe(item, d):
         for index_id in indexes:
             probe = commoncrawl_query(index_id, pattern, d, i)
             result["commoncrawl"].append(probe)
-            usable = any(not hit.get("payload", {}).get("error") and hit.get("payload", {}).get("payload_bytes", 0) > 0
+            usable = any(not hit.get("rejected") and not hit.get("payload", {}).get("error")
+                         and hit.get("payload", {}).get("payload_bytes", 0) > 0
                          for hit in probe.get("hits", []))
             if usable:
                 break
@@ -371,6 +400,8 @@ def compact_archive_evidence(result):
     archive = result.get("archive", {})
     for probe in archive.get("commoncrawl", []):
         for hit in probe.get("hits", []):
+            if hit.get("rejected"):
+                continue
             payload = hit.get("payload", {})
             evidence.append({
                 "archive": "commoncrawl",
