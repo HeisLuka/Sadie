@@ -66,6 +66,41 @@ def archive_fallback(url,d):
       "commoncrawl":cc_exact(url,d,"exact_cc",indexes)
     }
 
+
+def candidate_variants(url):
+    out=[url]
+    if url.startswith("http://"): out.append("https://"+url[len("http://"):])
+    elif url.startswith("https://"): out.append("http://"+url[len("https://"):])
+    if "?" in url: out.append(url.split("?",1)[0])
+    if "traffic.libsyn.com" in url:
+        base=url.split("?",1)[0]
+        out += [
+          base.replace("traffic.libsyn.com","hwcdn.libsyn.com"),
+          base.replace("traffic.libsyn.com","media.libsyn.com"),
+          base.replace("traffic.libsyn.com","traffic.libsyn.com/secure"),
+        ]
+    return list(dict.fromkeys(out))
+
+def probe_variants(url,d):
+    results=[]
+    for i,u in enumerate(candidate_variants(url),1):
+        ent={"url":u}
+        try:
+            p=d/f"variant_{i:02d}.bin"
+            ent["live"]=fetch(u,p,timeout=60)
+        except Exception as e:
+            ent["live_error"]=repr(e)
+        ent["wayback"]=wayback_exact(u,d,f"variant_{i:02d}")
+        results.append(ent)
+    return results
+
+def mine_text_urls(path):
+    try:
+        txt=path.read_text(encoding="utf-8",errors="replace")
+    except Exception:
+        return []
+    urls=re.findall(r'https?://[^"\'<>\s]+',txt)
+    return sorted(set(urls))
 def youtube_transcript(url,d):
     m=re.search(r"(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})",url)
     if not m: return {"skipped":"not youtube"}
