@@ -6,48 +6,92 @@
       "id": "SRC-25",
       "priority": "P0",
       "kind": "archive_media",
+      "url": "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
+      "archive_queries": [
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov"
+      ],
+      "cc_first_index": "CC-MAIN-2013-48",
+      "cc_followups": 7,
       "target": "Ep_20-QuickTime_H.264.mov",
-      "notes": "Broadway.com Show Ep.20; exact filename known; recover actual bytes or archive/CDN evidence.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+      "notes": "Broadway.com Show Ep.20; exact historical Libsyn href recovered in Notion. Recover bytes or archived response/redirect chain; current 404 is not a historical negative.",
+      "notion": "https://app.notion.com/p/3d132a84beec817980e4f2b4cad40d47"
     },
     {
       "id": "SRC-28",
       "priority": "P0",
       "kind": "archive_media",
+      "url": "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
+      "archive_queries": [
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov"
+      ],
+      "cc_first_index": "CC-MAIN-2013-48",
+      "cc_followups": 7,
       "target": "Ep_22-QuickTime_H.264.mov",
-      "notes": "Broadway.com Show Ep.22; exact filename known; recover actual bytes or archive/CDN evidence.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+      "notes": "Broadway.com Show Ep.22; exact historical Libsyn href recovered in Notion. Recover bytes or archived response/redirect chain; current 404 is not a historical negative.",
+      "notion": "https://app.notion.com/p/3d132a84beec817980e4f2b4cad40d47"
     },
     {
       "id": "SRC-44",
       "priority": "P0",
       "kind": "archive_media",
+      "urls": [
+        "https://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
+        "https://player.waywire.com/?id=12GSRS094YW79MDL"
+      ],
+      "archive_queries": [
+        "https://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
+        "https://player.waywire.com/?id=12GSRS094YW79MDL",
+        "*.tvinsider.com/*12GSRS094YW79MDL*"
+      ],
+      "cc_first_index": "CC-MAIN-2015-18",
+      "cc_followups": 7,
       "target": "12GSRS094YW79MDL",
-      "notes": "TV Insider historical Waywire ID; recover player/API/media payload.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+      "notes": "TV Insider historical Waywire CID. Preserve archived queue JSON/player HTML and follow only provider/media URLs actually observed in recovered state.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e"
     },
     {
       "id": "SRC-48",
       "priority": "P0",
       "kind": "archive_media",
-      "target": "2867948",
-      "notes": "BroadwayWorld/NBC Bug Out historical video ID; recover media object.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81afaa2cfebfdbc8c164"
+      "urls": [
+        "https://www.nbc.com/american-odyssey/video/bug-out/2867948",
+        "https://www.nbc.com/american-odyssey/video/sneak-peek-suzanne-breaks-down/2875083",
+        "https://link.theplatform.com/s/NnzsPC/media/guid/2410887629/2875083?format=preview"
+      ],
+      "archive_queries": [
+        "https://www.nbc.com/american-odyssey/video/bug-out/2867948",
+        "https://www.nbc.com/american-odyssey/video/sneak-peek-suzanne-breaks-down/2875083",
+        "*2875083*Sneak_Peek__Suzanne_Breaks_Down*"
+      ],
+      "cc_first_index": "CC-MAIN-2015-27",
+      "cc_followups": 5,
+      "target": "2867948 / MPX 2875083",
+      "notes": "NBC publisher object 2867948 maps to terminal MPX media 2875083. Recover historical response/CDN edge or exact payload; preserve 82s runtime and provenance boundaries.",
+      "notion": "https://app.notion.com/p/3cc32a84beec81eba1d7f96c44ad698f"
     },
     {
       "id": "TASK-32",
       "priority": "P0",
       "kind": "archive_page",
-      "target": "NewYork.com 56345 A Day in the Life Sadie Sink",
-      "notes": "Recover original body/assets; first eligible Common Crawl target CC-MAIN-2013-48.",
-      "notion": "https://app.notion.com/p/3d032a84beec813cbf2dd0899cf89118"
+      "url": "https://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/",
+      "archive_queries": [
+        "https://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/",
+        "http://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/"
+      ],
+      "cc_first_index": "CC-MAIN-2013-48",
+      "cc_followups": 7,
+      "target": "NewYork.com article 56345",
+      "notes": "Recover original body/assets. Winter 2013 is the first chronologically eligible Common Crawl; preserve index metadata before extraction.",
+      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
     },
     {
       "id": "TASK-272-SRC-354",
       "priority": "P1",
       "kind": "video",
       "url": "https://www.youtube.com/watch?v=9aVMqQffD4s",
-      "notes": "Tonight Show / You Read My Mind. Acquire captions/audio/transcript only from public surface.",
+      "notes": "Tonight Show / You Read My Mind. Acquire public media metadata, captions/subtitles and playable bytes where yt-dlp exposes them.",
       "notion": "https://app.notion.com/p/3ce32a84beec8120a400d980e3eee96a"
     },
     {
@@ -55,7 +99,7 @@
       "priority": "P1",
       "kind": "video",
       "url": "https://www.giants.com/video/eli-s-extras-sadie-sink-taylor-swift-music-video-eli-manning-bake-off",
-      "notes": "Agent-owned. Recover playable/captioned manifestation and transcript/timestamps.",
+      "notes": "Agent-owned. Recover playable/captioned manifestation and transcript/timestamps from public surfaces.",
       "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f"
     },
     {
@@ -71,9 +115,11 @@
       "priority": "P1",
       "kind": "page",
       "url": "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567",
+      "archive_queries": ["https://sadiesinkfan.com/gallery/displayimage.php?pid=2567"],
+      "cc_followups": 2,
       "notes": "Do not treat a failed request as negative. Seek image-bearing alternate object/raw thumbnail/archive route.",
       "notion": "https://app.notion.com/p/3cc32a84beec810ba3e6efc57374c64f"
     }
   ],
-  "run_requested_at": "2026-09-27T03:30:00+05:00"
+  "run_requested_at": "2026-09-27T13:27:00+05:00"
 }
