@@ -77,14 +77,20 @@
       "kind": "archive_page",
       "url": "https://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/",
       "archive_queries": [
-        "https://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/",
-        "http://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/"
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
       ],
       "cc_first_index": "CC-MAIN-2013-48",
       "cc_followups": 7,
-      "target": "NewYork.com article 56345",
-      "notes": "Recover original body/assets. Winter 2013 is the first chronologically eligible Common Crawl; preserve index metadata before extraction.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
+      "target": "NewYork.com article 56345 residual embedded images",
+      "notes": "Article body recovered 2026-09-27 from CC-MAIN-2013-48. Residual DoD only: recover/reconcile three exact embedded image assets, then close TASK-32.",
+      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de",
+      "urls": [
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
+      ]
     },
     {
       "id": "TASK-272-SRC-354",
@@ -115,11 +121,13 @@
       "priority": "P1",
       "kind": "page",
       "url": "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567",
-      "archive_queries": ["https://sadiesinkfan.com/gallery/displayimage.php?pid=2567"],
+      "archive_queries": [
+        "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567"
+      ],
       "cc_followups": 2,
       "notes": "Do not treat a failed request as negative. Seek image-bearing alternate object/raw thumbnail/archive route.",
       "notion": "https://app.notion.com/p/3cc32a84beec810ba3e6efc57374c64f"
     }
   ],
-  "run_requested_at": "2026-09-27T13:27:00+05:00"
+  "run_requested_at": "2026-09-27T14:05:00+05:00"
 }
