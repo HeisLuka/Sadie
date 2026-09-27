@@ -1,3 +1,9 @@
 recovery/MANIFEST.txt 0 bytes
+recovery/REPORT.md 449 bytes
 recovery/RUNNER_HEARTBEAT.txt 106 bytes
-recovery/TASK-312C-EARLY-REP-STATE/commoncrawl_collinfo.json 35226 bytes
+recovery/TASK-312C-MARA-PARADIGM/commoncrawl_collinfo.json 35226 bytes
+recovery/TASK-312C-MARA-PARADIGM/result.json 11056 bytes
+recovery/TASK-312C-NANCY-EARLY/commoncrawl_collinfo.json 35226 bytes
+recovery/TASK-312C-NANCY-EARLY/result.json 16134 bytes
+recovery/notion_handoff.json 686 bytes
+recovery/summary.json 607 bytes
