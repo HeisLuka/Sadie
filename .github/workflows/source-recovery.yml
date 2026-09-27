@@ -27,7 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y p7zip-full poppler-utils tesseract-ocr ffmpeg file
-          python -m pip install --upgrade yt-dlp
+          python -m pip install --upgrade yt-dlp youtube-transcript-api
 
       - name: Run recovery queue
         run: python scripts/recover.py
