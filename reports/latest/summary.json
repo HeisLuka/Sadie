@@ -1,21 +1,17 @@
 {
   "totals": {
-    "blocked_or_error": 1
+    "not_found": 1
   },
   "items": [
     {
-      "id": "TASK-32",
+      "id": "TASK-311C-BDU107-ACTION",
       "priority": "P0",
-      "outcome": "blocked_or_error",
+      "outcome": "not_found",
       "payload_count": 0,
       "archive_hits": 0,
       "key_files": [],
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de",
-      "errors": [
-        "<HTTPError 404: 'Not Found'>",
-        "<HTTPError 404: 'Not Found'>",
-        "<HTTPError 404: 'Not Found'>"
-      ]
+      "notion": "https://app.notion.com/p/3ce32a84beec81469944cababfe23545",
+      "errors": []
     }
   ]
 }

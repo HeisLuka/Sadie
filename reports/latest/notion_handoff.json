@@ -2,17 +2,13 @@
   "generated_by": "Sadie Source Recovery",
   "items": [
     {
-      "id": "TASK-32",
+      "id": "TASK-311C-BDU107-ACTION",
       "priority": "P0",
-      "outcome": "blocked_or_error",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de",
+      "outcome": "not_found",
+      "notion": "https://app.notion.com/p/3ce32a84beec81469944cababfe23545",
       "archive_hits": 0,
       "recovered_files": [],
-      "errors": [
-        "<HTTPError 404: 'Not Found'>",
-        "<HTTPError 404: 'Not Found'>",
-        "<HTTPError 404: 'Not Found'>"
-      ],
+      "errors": [],
       "archive_evidence": [],
       "payload_files": []
     }
