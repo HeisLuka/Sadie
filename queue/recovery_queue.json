@@ -3,25 +3,29 @@
   "generated_at": "2026-09-27",
   "items": [
     {
-      "id": "TASK-98",
+      "id": "TASK-94",
       "priority": "P0",
       "kind": "archive_media",
+      "urls": [
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042"
+      ],
       "archive_queries": [
-        "https://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
-        "https://player.waywire.com/?id=12GSRS094YW79MDL",
-        "http://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
-        "http://player.waywire.com/?id=12GSRS094YW79MDL"
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov"
       ],
       "cc_indexes": [
-        "CC-MAIN-2015-18",
-        "CC-MAIN-2015-22",
-        "CC-MAIN-2015-27",
-        "CC-MAIN-2015-32"
+        "CC-MAIN-2013-48",
+        "CC-MAIN-2014-10",
+        "CC-MAIN-2014-15",
+        "CC-MAIN-2014-23"
       ],
-      "target": "Waywire CID 12GSRS094YW79MDL raw queue/player state",
-      "notes": "Focused pass. Exact target CID only; no TV Insider wildcard and no control CID. Recover raw queue/player state first. Follow provider/CDN URLs only if observed in recovered target state.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e"
+      "target": "Broadway.com Show Episode 20 and 22 historical Libsyn MOV payloads",
+      "notes": "Focused pass on observed first-party historical hrefs only. Current live 404 is not historical negative. Preserve any redirect/storage alias (especially hw.libsyn.com), MIME, length, digest, and actual MOV bytes if recovered.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5"
     }
   ],
-  "run_requested_at": "2026-09-27T16:20:00+05:00"
+  "run_requested_at": "2026-09-27T16:36:00+05:00"
 }
