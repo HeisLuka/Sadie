@@ -28,6 +28,11 @@ jobs:
           sudo apt-get install -y p7zip-full poppler-utils tesseract-ocr ffmpeg file
           python -m pip install --upgrade yt-dlp beautifulsoup4 warcio
 
+      - name: Runner heartbeat
+        run: |
+          mkdir -p recovery
+          printf 'runner_started_at=%s\ncommit=%s\nrun_id=%s\n' "$(date -u +%FT%TZ)" "$GITHUB_SHA" "$GITHUB_RUN_ID" > recovery/RUNNER_HEARTBEAT.txt
+
       - name: Run recovery queue
         run: python scripts/recover.py
 
