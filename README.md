@@ -22,3 +22,5 @@ This pipeline does **not** bypass logins, CAPTCHAs, paywalls, DRM, or crack encr
 ## Queue
 
 `queue/recovery_queue.json` is the first Actions recovery batch derived from unresolved/blocked Sadie Research HQ items. Every item carries its Notion provenance so results can be written back without losing source identity.
+
+<!-- actions-heartbeat-probe: 2026-09-27 -->
