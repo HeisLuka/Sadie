@@ -3,13 +3,78 @@
   "generated_at": "2026-09-27",
   "items": [
     {
-      "id": "HUM-3",
+      "id": "TASK-32",
       "priority": "P0",
-      "kind": "video",
-      "url": "https://www.giants.com/video/eli-s-extras-sadie-sink-taylor-swift-music-video-eli-manning-bake-off",
-      "notes": "Agent-owned. Recover playable/captioned manifestation and transcript/timestamps from public surfaces. Focused 2026-09-27 pass: recover all English subtitle HLS segments independently, normalize malformed WebVTT, merge full transcript; do not spend runner time on unrelated queue items.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f"
+      "kind": "archive_page",
+      "urls": [
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
+      ],
+      "archive_queries": [
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
+      ],
+      "cc_first_index": "CC-MAIN-2013-48",
+      "cc_followups": 10,
+      "target": "NewYork.com article 56345 residual embedded image bytes",
+      "notes": "Article body/date/author already recovered. Residual DoD only: obtain any historically correct byte manifestation of the three exact embedded images; preserve digest, capture time and dimensions; dedupe against Annie assets.",
+      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
+    },
+    {
+      "id": "TASK-94",
+      "priority": "P0",
+      "kind": "archive_media",
+      "urls": [
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042"
+      ],
+      "archive_queries": [
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
+        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov"
+      ],
+      "cc_first_index": "CC-MAIN-2013-48",
+      "cc_followups": 12,
+      "target": "Broadway.com Show Episode 20 and 22 historical Libsyn MOV payloads",
+      "notes": "Use observed first-party historical hrefs. Preserve redirects/storage aliases such as hw.libsyn.com if seen. Current 404 is not historical negative. Do not spend cycles guessing unrelated filename variants.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5"
+    },
+    {
+      "id": "TASK-98",
+      "priority": "P0",
+      "kind": "archive_media",
+      "archive_queries": [
+        "https://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
+        "https://player.waywire.com/?id=12GSRS094YW79MDL",
+        "http://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
+        "http://player.waywire.com/?id=12GSRS094YW79MDL",
+        "https://player.waywire.com/api/queue?id=1R99M035DCFKQVF2&page=1",
+        "https://player.waywire.com/?id=1R99M035DCFKQVF2"
+      ],
+      "cc_first_index": "CC-MAIN-2015-18",
+      "cc_followups": 12,
+      "target": "Waywire CID 12GSRS094YW79MDL raw queue/player state",
+      "notes": "No tvinsider wildcard query: previous wildcard produced host-root false positives. Recover exact target CID queue/player raw state; same-publisher control CID 1R99M035DCFKQVF2 is grammar-only. Follow provider/CDN URLs only when actually observed in recovered state.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e"
+    },
+    {
+      "id": "HUM-12",
+      "priority": "P1",
+      "kind": "archive_page",
+      "archive_queries": [
+        "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567",
+        "http://sadiesinkfan.com/gallery/displayimage.php?pid=2567",
+        "https://sadiesinkfan.com/gallery/*2567*",
+        "https://sadiesinkfan.com/gallery/*HQ-Outtakes_2810829.jpg*"
+      ],
+      "cc_followups": 8,
+      "target": "Historical Sadie Sink Fan Coppermine pid=2567 / HQ-Outtakes_2810829.jpg",
+      "notes": "Current live domain/path is contaminated by unrelated SULTANSLOT content. Archive-only. Require historically dated image-bearing Coppermine object/raw thumbnail/grid or upstream mirror; current live page must never count as Sadie payload.",
+      "notion": "https://app.notion.com/p/3cc32a84beec810ba3e6efc57374c64f"
     }
   ],
-  "run_requested_at": "2026-09-27T15:52:00+05:00"
+  "run_requested_at": "2026-09-27T15:58:00+05:00"
 }
