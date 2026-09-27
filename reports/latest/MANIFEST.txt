@@ -1,7 +1,3 @@
 recovery/MANIFEST.txt 0 bytes
-recovery/REPORT.md 291 bytes
 recovery/RUNNER_HEARTBEAT.txt 106 bytes
-recovery/TASK-311C-BDU107-ACTION/commoncrawl_collinfo.json 35226 bytes
-recovery/TASK-311C-BDU107-ACTION/result.json 17331 bytes
-recovery/notion_handoff.json 375 bytes
-recovery/summary.json 333 bytes
+recovery/TASK-312C-EARLY-REP-STATE/commoncrawl_collinfo.json 35226 bytes
