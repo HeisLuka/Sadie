@@ -156,16 +156,22 @@ def derive_file(path, out_dir, label=None):
 
 
 def extract_ytdlp_info(url, d):
-    """Use yt-dlp only as an extractor; do not let subtitle parsing stop recovery."""
-    probe = sh(["yt-dlp", "--skip-download", "--no-playlist", "-J", url], timeout=300)
-    if probe.get("returncode") != 0:
-        return {"probe": probe}
+    """Use yt-dlp only as an extractor; persist full JSON instead of piping it through truncated logs."""
+    template = str(d / "extractor.%(ext)s")
+    probe = sh(["yt-dlp", "--skip-download", "--no-playlist", "--write-info-json",
+                "-o", template, url], timeout=300)
+    candidates = sorted(d.glob("extractor*.info.json"))
+    if probe.get("returncode") != 0 or not candidates:
+        return {"probe": probe, "info_file_found": bool(candidates)}
+    info_path = candidates[0]
     try:
-        info = json.loads(probe.get("stdout") or "{}")
-        json_dump(d / "extractor.info.json", info)
-        return {"probe": {"returncode": 0}, "info": info}
+        info = json.loads(info_path.read_text(encoding="utf-8"))
+        canonical = d / "extractor.info.json"
+        if info_path != canonical:
+            canonical.write_text(json.dumps(info, ensure_ascii=False, indent=2), encoding="utf-8")
+        return {"probe": {"returncode": 0}, "info_path": str(canonical), "info": info}
     except Exception as e:
-        return {"probe": probe, "parse_error": repr(e)}
+        return {"probe": probe, "info_path": str(info_path), "parse_error": repr(e)}
 
 
 def normalize_vtt_text(text):
