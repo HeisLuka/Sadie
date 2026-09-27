@@ -41,47 +41,7 @@
       "url": "https://player.theplatform.com/p/NnzsPC/widget/select/media/guid/2410887629/2875083?form=html",
       "notes": "Observed terminal ThePlatform/MPX player route; attempt metadata/media URL recovery.",
       "notion": "https://app.notion.com/p/3cc32a84beec8123a82afa3c193a0bbf"
-    },
-    {
-      "id": "TASK-32-IMG1",
-      "priority": "P0",
-      "kind": "image",
-      "url": "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
-      "notes": "Residual exact image-byte recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
-    },
-    {
-      "id": "TASK-32-IMG2",
-      "priority": "P0",
-      "kind": "image",
-      "url": "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
-      "notes": "Residual exact image-byte recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
-    },
-    {
-      "id": "TASK-32-IMG3",
-      "priority": "P0",
-      "kind": "image",
-      "url": "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg",
-      "notes": "Residual exact image-byte recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
-    },
-    {
-      "id": "HUM-3",
-      "priority": "P1",
-      "kind": "video",
-      "url": "https://www.giants.com/video/eli-s-extras-sadie-sink-taylor-swift-music-video-eli-manning-bake-off",
-      "notes": "Recover metadata and English subtitles without full video.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f"
-    },
-    {
-      "id": "TASK-272-SRC-354",
-      "priority": "P1",
-      "kind": "video",
-      "url": "https://www.youtube.com/watch?v=9aVMqQffD4s",
-      "notes": "Try transcript API plus metadata/subtitle-only extraction.",
-      "notion": "https://app.notion.com/p/3ce32a84beec8120a400d980e3eee96a"
     }
   ],
-  "run_requested_at": "2026-09-27T16:09:00+05:00"
+  "run_requested_at": "2026-09-27T22:56:00+05:00"
 }
