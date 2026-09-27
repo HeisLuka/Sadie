@@ -1,0 +1,134 @@
+{
+  "totals": {
+    "blocked_or_error": 2,
+    "recovered_payload": 7
+  },
+  "items": [
+    {
+      "id": "SRC-25",
+      "priority": "P0",
+      "outcome": "blocked_or_error",
+      "payload_count": 0,
+      "archive_hits": 0,
+      "key_files": [],
+      "notion": "https://app.notion.com/p/3d132a84beec817980e4f2b4cad40d47",
+      "errors": [
+        "<HTTPError 404: 'Not Found'>"
+      ]
+    },
+    {
+      "id": "SRC-28",
+      "priority": "P0",
+      "outcome": "blocked_or_error",
+      "payload_count": 0,
+      "archive_hits": 0,
+      "key_files": [],
+      "notion": "https://app.notion.com/p/3d132a84beec817980e4f2b4cad40d47",
+      "errors": [
+        "<HTTPError 404: 'Not Found'>"
+      ]
+    },
+    {
+      "id": "SRC-44",
+      "priority": "P0",
+      "outcome": "recovered_payload",
+      "payload_count": 4,
+      "archive_hits": 5,
+      "key_files": [
+        "recovery/SRC-44/cc_CC-MAIN-2015-18_2_1.payload.html",
+        "recovery/SRC-44/cc_CC-MAIN-2015-18_2_2.payload.html",
+        "recovery/SRC-44/wayback_2_2.html",
+        "recovery/SRC-44/wayback_2_3.html"
+      ],
+      "notion": "https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e",
+      "errors": [
+        "URLError(gaierror(-3, 'Temporary failure in name resolution'))",
+        "URLError(gaierror(-3, 'Temporary failure in name resolution'))"
+      ]
+    },
+    {
+      "id": "SRC-48",
+      "priority": "P0",
+      "outcome": "recovered_payload",
+      "payload_count": 2,
+      "archive_hits": 0,
+      "key_files": [
+        "recovery/SRC-48/direct_0.html",
+        "recovery/SRC-48/direct_1.html"
+      ],
+      "notion": "https://app.notion.com/p/3cc32a84beec81eba1d7f96c44ad698f",
+      "errors": []
+    },
+    {
+      "id": "TASK-32",
+      "priority": "P0",
+      "outcome": "recovered_payload",
+      "payload_count": 4,
+      "archive_hits": 4,
+      "key_files": [
+        "recovery/TASK-32/cc_CC-MAIN-2014-23_3_1.payload.html",
+        "recovery/TASK-32/wayback_3_1.html",
+        "recovery/TASK-32/wayback_3_2.html",
+        "recovery/TASK-32/wayback_3_3.html"
+      ],
+      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de",
+      "errors": [
+        "<HTTPError 404: 'Not Found'>",
+        "<HTTPError 404: 'Not Found'>",
+        "<HTTPError 404: 'Not Found'>",
+        "<HTTPError 404: 'Not Found'>"
+      ]
+    },
+    {
+      "id": "TASK-272-SRC-354",
+      "priority": "P1",
+      "outcome": "recovered_payload",
+      "payload_count": 1,
+      "archive_hits": 0,
+      "key_files": [
+        "recovery/TASK-272-SRC-354/direct_0.html"
+      ],
+      "notion": "https://app.notion.com/p/3ce32a84beec8120a400d980e3eee96a",
+      "errors": []
+    },
+    {
+      "id": "HUM-3",
+      "priority": "P1",
+      "outcome": "recovered_payload",
+      "payload_count": 4,
+      "archive_hits": 0,
+      "key_files": [
+        "recovery/HUM-3/direct_0.html",
+        "recovery/HUM-3/media.en.vtt.part",
+        "recovery/HUM-3/media.en.vtt.part-Frag35",
+        "recovery/HUM-3/media.en.vtt.ytdl"
+      ],
+      "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f",
+      "errors": []
+    },
+    {
+      "id": "CAN-91",
+      "priority": "P1",
+      "outcome": "recovered_payload",
+      "payload_count": 1,
+      "archive_hits": 0,
+      "key_files": [
+        "recovery/CAN-91/direct_0.jpg"
+      ],
+      "notion": "https://app.notion.com/p/3d532a84beec818a8ae1dbae610ca38e",
+      "errors": []
+    },
+    {
+      "id": "HUM-12",
+      "priority": "P1",
+      "outcome": "recovered_payload",
+      "payload_count": 1,
+      "archive_hits": 0,
+      "key_files": [
+        "recovery/HUM-12/direct_0.html"
+      ],
+      "notion": "https://app.notion.com/p/3cc32a84beec810ba3e6efc57374c64f",
+      "errors": []
+    }
+  ]
+}
