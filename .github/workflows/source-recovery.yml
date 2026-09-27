@@ -7,13 +7,14 @@ on:
       - "queue/recovery_queue.json"
       - "scripts/recover.py"
       - ".github/workflows/source-recovery.yml"
+  pull_request:
+    paths:
+      - "queue/recovery_queue.json"
+      - "scripts/recover.py"
+      - ".github/workflows/source-recovery.yml"
 
 permissions:
-  contents: write
-
-concurrency:
-  group: sadie-source-recovery-main
-  cancel-in-progress: true
+  contents: read
 
 jobs:
   recover:
@@ -26,12 +27,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y p7zip-full poppler-utils tesseract-ocr ffmpeg file
-          python -m pip install --upgrade yt-dlp beautifulsoup4 warcio
-
-      - name: Runner heartbeat
-        run: |
-          mkdir -p recovery
-          printf 'runner_started_at=%s\ncommit=%s\nrun_id=%s\n' "$(date -u +%FT%TZ)" "$GITHUB_SHA" "$GITHUB_RUN_ID" > recovery/RUNNER_HEARTBEAT.txt
+          python -m pip install --upgrade yt-dlp youtube-transcript-api
 
       - name: Run recovery queue
         run: python scripts/recover.py
@@ -39,44 +35,13 @@ jobs:
       - name: Build compact manifest
         if: always()
         run: |
-          mkdir -p recovery
-          find recovery -maxdepth 3 -type f -printf '%p %s bytes\n' | sort > recovery/MANIFEST.txt || true
-
-      - name: Publish recovery summary
-        if: always()
-        run: |
-          if [ -f recovery/REPORT.md ]; then
-            cat recovery/REPORT.md >> "$GITHUB_STEP_SUMMARY"
-          else
-            echo "Recovery report was not produced." >> "$GITHUB_STEP_SUMMARY"
-          fi
-
-      - name: Persist compact result in repository
-        if: always()
-        run: |
-          rm -rf reports/latest
-          mkdir -p reports/latest
-          cp recovery/REPORT.md reports/latest/REPORT.md 2>/dev/null || true
-          cp recovery/summary.json reports/latest/summary.json 2>/dev/null || true
-          cp recovery/notion_handoff.json reports/latest/notion_handoff.json 2>/dev/null || true
-          cp recovery/MANIFEST.txt reports/latest/MANIFEST.txt 2>/dev/null || true
-          printf '%s\n' "${GITHUB_SHA}" > reports/latest/source_commit.txt
-          printf '%s\n' "${GITHUB_RUN_ID}" > reports/latest/run_id.txt
-          git config user.name "sadie-recovery-bot"
-          git config user.email "actions@users.noreply.github.com"
-          git add reports/latest
-          if ! git diff --cached --quiet; then
-            git commit -m "chore: persist recovery report [skip ci]"
-            git fetch origin main
-            git rebase origin/main
-            git push origin HEAD:main
-          fi
+          find recovery -maxdepth 2 -type f -printf '%p %s bytes\n' | sort > recovery/MANIFEST.txt || true
 
       - name: Upload recovered objects and evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sadie-source-recovery-${{ github.run_id }}
+          name: sadie-source-recovery
           path: recovery/
           if-no-files-found: warn
           retention-days: 30
