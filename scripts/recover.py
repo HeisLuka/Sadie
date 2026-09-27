@@ -155,6 +155,82 @@ def derive_file(path, out_dir, label=None):
     return result
 
 
+def extract_ytdlp_info(url, d):
+    """Use yt-dlp only as an extractor; do not let subtitle parsing stop recovery."""
+    probe = sh(["yt-dlp", "--skip-download", "--no-playlist", "-J", url], timeout=300)
+    if probe.get("returncode") != 0:
+        return {"probe": probe}
+    try:
+        info = json.loads(probe.get("stdout") or "{}")
+        json_dump(d / "extractor.info.json", info)
+        return {"probe": {"returncode": 0}, "info": info}
+    except Exception as e:
+        return {"probe": probe, "parse_error": repr(e)}
+
+
+def normalize_vtt_text(text):
+    # Accept broken provider timestamps such as 00:02:21.1000 by truncating
+    # fractional seconds to WebVTT's required millisecond precision.
+    return re.sub(r"(\d{2}:\d{2}:\d{2}\.)(\d{3})\d+(?=\s*-->|\s*$)", r"\1\2", text, flags=re.M)
+
+
+def recover_hls_subtitles(info, d, language="en"):
+    subs = (info or {}).get("subtitles") or {}
+    tracks = subs.get(language) or []
+    if not tracks:
+        return {"status": "no_track", "language": language}
+    # Prefer an HLS subtitle rendition when available.
+    track = next((x for x in tracks if "m3u8" in str(x.get("url", "")).lower()
+                  or str(x.get("ext", "")).lower() in {"m3u8", "m3u8_native"}), tracks[0])
+    playlist_url = track.get("url")
+    if not playlist_url:
+        return {"status": "no_url", "track": track}
+    try:
+        playlist_bytes, pmeta = fetch_bytes(playlist_url, timeout=120, max_bytes=4 * 1024 * 1024)
+        playlist_text = playlist_bytes.decode("utf-8", errors="replace")
+        (d / f"subtitle.{language}.m3u8").write_text(playlist_text, encoding="utf-8")
+    except Exception as e:
+        return {"status": "playlist_error", "url": playlist_url, "error": repr(e)}
+
+    segment_urls = []
+    for raw in playlist_text.splitlines():
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        segment_urls.append(urllib.parse.urljoin(playlist_url, line))
+
+    pieces = []
+    segment_meta = []
+    for idx, segment_url in enumerate(segment_urls):
+        try:
+            data, meta = fetch_bytes(segment_url, timeout=90, max_bytes=2 * 1024 * 1024)
+            text = normalize_vtt_text(data.decode("utf-8", errors="replace"))
+            seg_path = d / f"subtitle.{language}.segment-{idx:04d}.vtt"
+            seg_path.write_text(text, encoding="utf-8")
+            pieces.append(text.replace("WEBVTT", "", 1).strip())
+            segment_meta.append({"index": idx, "url": segment_url, "bytes": len(data),
+                                 "sha256": sha256_bytes(data), "status": meta.get("status")})
+        except Exception as e:
+            segment_meta.append({"index": idx, "url": segment_url, "error": repr(e)})
+
+    merged = "WEBVTT\n\n" + "\n\n".join(x for x in pieces if x) + "\n"
+    merged_path = d / f"subtitle.{language}.full.salvaged.vtt"
+    merged_path.write_text(merged, encoding="utf-8")
+    json_dump(d / f"subtitle.{language}.segments.json", segment_meta)
+    return {
+        "status": "complete" if segment_urls and len(pieces) == len(segment_urls) else "partial",
+        "language": language,
+        "playlist_url": playlist_url,
+        "playlist_sha256": sha256_bytes(playlist_bytes),
+        "segments_expected": len(segment_urls),
+        "segments_recovered": len(pieces),
+        "merged_path": str(merged_path),
+        "merged_bytes": merged_path.stat().st_size,
+        "merged_sha256": hash_file(merged_path),
+        "segment_errors": [x for x in segment_meta if x.get("error")],
+    }
+
+
 def salvage_partial_vtt(d):
     """Repair/merge partial WebVTT left by yt-dlp when a provider subtitle fragment is malformed."""
     parts = sorted(p for p in d.glob("media*.vtt*") if p.is_file() and not p.name.endswith(".ytdl"))
@@ -192,6 +268,8 @@ def direct_acquire(item, d):
             entry["error"] = repr(e)
         out.append(entry)
     if item.get("kind") == "video" and urls:
+        extractor = extract_ytdlp_info(urls[0], d)
+        hls_subtitles = recover_hls_subtitles(extractor.get("info"), d, "en") if extractor.get("info") else None
         ytdlp = sh(["yt-dlp", "--no-playlist", "--write-info-json", "--write-description", "--write-thumbnail",
                     "--write-subs", "--write-auto-subs", "--sub-langs", "all,-live_chat", "--convert-subs", "vtt",
                     "-o", str(d / "media.%(ext)s"), urls[0]], timeout=1800)
@@ -204,7 +282,8 @@ def direct_acquire(item, d):
             except Exception as e:
                 derived.append({"path": str(media_path), "error": repr(e)})
         salvage = salvage_partial_vtt(d)
-        out.append({"ytdlp": ytdlp, "derived": derived, "subtitle_salvage": salvage})
+        out.append({"extractor": extractor, "hls_subtitles": hls_subtitles,
+                    "ytdlp": ytdlp, "derived": derived, "subtitle_salvage": salvage})
     return out
 
 
