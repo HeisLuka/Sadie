@@ -67,7 +67,9 @@ jobs:
           git add reports/latest
           if ! git diff --cached --quiet; then
             git commit -m "chore: persist recovery report [skip ci]"
-            git push
+            git fetch origin main
+            git rebase origin/main
+            git push origin HEAD:main
           fi
 
       - name: Upload recovered objects and evidence
