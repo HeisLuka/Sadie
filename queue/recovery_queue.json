@@ -3,29 +3,31 @@
   "generated_at": "2026-09-27",
   "items": [
     {
-      "id": "TASK-94",
+      "id": "TASK-32",
       "priority": "P0",
-      "kind": "archive_media",
+      "kind": "archive_page",
       "urls": [
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042"
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
       ],
       "archive_queries": [
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov",
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov"
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg",
+        "https://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
+        "https://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
+        "https://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
       ],
       "cc_indexes": [
         "CC-MAIN-2013-48",
         "CC-MAIN-2014-10",
-        "CC-MAIN-2014-15",
-        "CC-MAIN-2014-23"
+        "CC-MAIN-2014-15"
       ],
-      "target": "Broadway.com Show Episode 20 and 22 historical Libsyn MOV payloads",
-      "notes": "Focused pass on observed first-party historical hrefs only. Current live 404 is not historical negative. Preserve any redirect/storage alias (especially hw.libsyn.com), MIME, length, digest, and actual MOV bytes if recovered.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5"
+      "target": "Three exact embedded image assets from NewYork.com Sadie profile 56345",
+      "notes": "Article body/date/author already recovered. Residual DoD only: recover historically correct bytes for any of the three exact image paths. Preserve WARC date, MIME, dimensions and SHA-256; do not count article HTML as image recovery.",
+      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
     }
   ],
-  "run_requested_at": "2026-09-27T16:36:00+05:00"
+  "run_requested_at": "2026-09-27T16:49:00+05:00"
 }
