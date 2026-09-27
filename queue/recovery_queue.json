@@ -3,36 +3,47 @@
   "generated_at": "2026-09-27",
   "items": [
     {
-      "id": "TASK-312C-EARLY-REP-STATE",
+      "id": "TASK-312C-NANCY-EARLY",
       "priority": "P0",
       "kind": "archive_page",
       "archive_queries": [
         "*Sadie*Sink*Nancy*Carson*",
         "*Sadie*Sink*Carson*Adler*",
         "*Sadie*Sink*Connecting*Talent*",
-        "*Sadie*Sink*represented*Carson*",
-        "*Sadie*Sink*agent*Nancy*",
-        "*Sadie*Sink*manager*",
-        "*Sadie*Sink*John*Mara*",
-        "*Sadie*Sink*Mara*Entertainment*",
-        "*Sadie*Sink*Paradigm*"
+        "*Sadie*Sink*represented*Nancy*",
+        "*Sadie*Sink*agent*Nancy*"
       ],
       "cc_indexes": [
         "CC-MAIN-2012-48",
         "CC-MAIN-2013-20",
         "CC-MAIN-2013-48",
-        "CC-MAIN-2014-10",
-        "CC-MAIN-2014-15",
+        "CC-MAIN-2014-10"
+      ],
+      "target": "Earliest formal Sadie→Nancy Carson/Carson-Adler/Connecting Talent representation state",
+      "notes": "Accept only Sadie-specific formal/action state: represented by, client roster, agent contact, submission/booking attribution, appointment sender, or equivalent. Special thanks and general professional-network mentions are controls only.",
+      "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82"
+    },
+    {
+      "id": "TASK-312C-MARA-PARADIGM",
+      "priority": "P0",
+      "kind": "archive_page",
+      "archive_queries": [
+        "*Sadie*Sink*John*Mara*",
+        "*Sadie*Sink*Mara*Entertainment*",
+        "*Sadie*Sink*manager*Mara*",
+        "*Sadie*Sink*Paradigm*",
+        "*Sadie*Sink*represented*Paradigm*"
+      ],
+      "cc_indexes": [
         "CC-MAIN-2015-11",
         "CC-MAIN-2015-18",
         "CC-MAIN-2016-07",
-        "CC-MAIN-2016-18",
-        "CC-MAIN-2016-30"
+        "CC-MAIN-2016-18"
       ],
-      "target": "Earliest dated formal Sadie representation/action state before 14 Oct 2016",
-      "notes": "Accept only Sadie-specific action/role evidence: represented by, client roster, agent/manager contact block, submission/booking attribution, appointment sender, or equivalent formal state. Mere thanks, co-mentions, neighboring clients, event attendance or professional-support association do not establish representation. Preserve earliest dated capture and exact wording.",
+      "target": "Earliest formal Mara Entertainment / Paradigm state before 14 Oct 2016",
+      "notes": "Accept only Sadie-specific formal manager/agency/client/contact/submission state. Mere John Mara co-mention or professional-support adjacency is not formal management.",
       "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82"
     }
   ],
-  "run_requested_at": "2026-09-27T17:41:00+05:00"
+  "run_requested_at": "2026-09-27T22:50:00+05:00"
 }
