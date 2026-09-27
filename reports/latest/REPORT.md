@@ -2,9 +2,12 @@
 
 | Item | Priority | Outcome | Payload files | Archive hits |
 |---|---:|---|---:|---:|
-| TASK-98 | P0 | not_found | 0 | 0 |
+| TASK-94 | P0 | blocked_or_error | 0 | 0 |
 
 ## Detail
 
-### TASK-98 — not_found
-Notion: https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e
+### TASK-94 — blocked_or_error
+Notion: https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5
+Errors/boundaries:
+- `<HTTPError 404: 'Not Found'>`
+- `<HTTPError 404: 'Not Found'>`

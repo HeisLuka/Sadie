@@ -1,17 +1,20 @@
 {
   "totals": {
-    "not_found": 1
+    "blocked_or_error": 1
   },
   "items": [
     {
-      "id": "TASK-98",
+      "id": "TASK-94",
       "priority": "P0",
-      "outcome": "not_found",
+      "outcome": "blocked_or_error",
       "payload_count": 0,
       "archive_hits": 0,
       "key_files": [],
-      "notion": "https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e",
-      "errors": []
+      "notion": "https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5",
+      "errors": [
+        "<HTTPError 404: 'Not Found'>",
+        "<HTTPError 404: 'Not Found'>"
+      ]
     }
   ]
 }
