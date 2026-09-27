@@ -366,16 +366,67 @@ def outcome_for(result, d):
     return "blocked_or_error" if any("HTTP Error 404" not in e for e in errors) else "not_found"
 
 
+def compact_archive_evidence(result):
+    evidence = []
+    archive = result.get("archive", {})
+    for probe in archive.get("commoncrawl", []):
+        for hit in probe.get("hits", []):
+            payload = hit.get("payload", {})
+            evidence.append({
+                "archive": "commoncrawl",
+                "index": probe.get("index"),
+                "pattern": probe.get("pattern"),
+                "url": hit.get("url"),
+                "timestamp": hit.get("timestamp"),
+                "status": hit.get("status"),
+                "mime": hit.get("mime") or hit.get("mime-detected"),
+                "digest": hit.get("digest"),
+                "filename": hit.get("filename"),
+                "offset": hit.get("offset"),
+                "length": hit.get("length"),
+                "payload_target_uri": payload.get("target_uri"),
+                "payload_content_type": payload.get("content_type"),
+                "payload_bytes": payload.get("payload_bytes"),
+                "payload_sha256": payload.get("payload_sha256"),
+            })
+    for probe in archive.get("wayback", []):
+        for hit in probe.get("hits", []):
+            snapshot = hit.get("snapshot", {})
+            evidence.append({
+                "archive": "wayback",
+                "pattern": probe.get("pattern"),
+                "url": hit.get("original"),
+                "timestamp": hit.get("timestamp"),
+                "status": hit.get("statuscode"),
+                "mime": hit.get("mimetype"),
+                "digest": hit.get("digest"),
+                "length": hit.get("length"),
+                "snapshot_url": snapshot.get("final_url"),
+                "payload_bytes": snapshot.get("bytes"),
+                "payload_sha256": snapshot.get("sha256"),
+            })
+    return evidence[:40]
+
+
 def write_report(rows):
     totals = {}
     for row in rows:
         totals[row["outcome"]] = totals.get(row["outcome"], 0) + 1
     json_dump(ROOT / "summary.json", {"totals": totals, "items": rows})
+    handoff_items = []
+    for row in rows:
+        result_path = ROOT / safe(row["id"]) / "result.json"
+        result = json.loads(result_path.read_text(encoding="utf-8")) if result_path.exists() else {}
+        handoff_items.append({
+            "id": row["id"], "priority": row.get("priority"), "outcome": row["outcome"],
+            "notion": row.get("notion"), "archive_hits": row.get("archive_hits", 0),
+            "recovered_files": row.get("key_files", []), "errors": row.get("errors", []),
+            "archive_evidence": compact_archive_evidence(result),
+            "payload_files": result.get("payload_files", [])[:20],
+        })
     json_dump(ROOT / "notion_handoff.json", {
         "generated_by": "Sadie Source Recovery",
-        "items": [{"id": row["id"], "priority": row.get("priority"), "outcome": row["outcome"],
-                   "notion": row.get("notion"), "archive_hits": row.get("archive_hits", 0),
-                   "recovered_files": row.get("key_files", []), "errors": row.get("errors", [])} for row in rows],
+        "items": handoff_items,
     })
     lines = ["# Sadie Source Recovery report", "", "| Item | Priority | Outcome | Payload files | Archive hits |",
              "|---|---:|---|---:|---:|"]
