@@ -3,29 +3,36 @@
   "generated_at": "2026-09-27",
   "items": [
     {
-      "id": "TASK-311C-BDU107-ACTION",
+      "id": "TASK-312C-EARLY-REP-STATE",
       "priority": "P0",
       "kind": "archive_page",
       "archive_queries": [
-        "*BDU107*",
-        "*Mutually*Assured*Destruction*BDU107*",
-        "*Sadie*Sink*Lana*",
-        "*Tucker*Meyerson*Americans*",
-        "*Ross*Meyerson*Americans*",
-        "*Nancy*Carson*Sadie*Sink*",
-        "*Connecting*Talent*Sadie*Sink*"
+        "*Sadie*Sink*Nancy*Carson*",
+        "*Sadie*Sink*Carson*Adler*",
+        "*Sadie*Sink*Connecting*Talent*",
+        "*Sadie*Sink*represented*Carson*",
+        "*Sadie*Sink*agent*Nancy*",
+        "*Sadie*Sink*manager*",
+        "*Sadie*Sink*John*Mara*",
+        "*Sadie*Sink*Mara*Entertainment*",
+        "*Sadie*Sink*Paradigm*"
       ],
       "cc_indexes": [
+        "CC-MAIN-2012-48",
         "CC-MAIN-2013-20",
-        "CC-MAIN-2013-21",
-        "CC-MAIN-2013-22",
         "CC-MAIN-2013-48",
-        "CC-MAIN-2014-10"
+        "CC-MAIN-2014-10",
+        "CC-MAIN-2014-15",
+        "CC-MAIN-2015-11",
+        "CC-MAIN-2015-18",
+        "CC-MAIN-2016-07",
+        "CC-MAIN-2016-18",
+        "CC-MAIN-2016-30"
       ],
-      "target": "The Americans S1E8 BDU107 performer-side action-bearing acquisition records",
-      "notes": "Search only for action-bearing evidence around Sadie/Lana: submission, appointment, callback, pre-read, booking, deal memo, sides, call sheet, casting-session sheet, representative sender, or contemporaneous client/rep state. Episode credits/stills/reviews are controls only and must not count as solving the bridge. Preserve any historically dated page/object carrying BDU107 + casting/rep context.",
-      "notion": "https://app.notion.com/p/3ce32a84beec81469944cababfe23545"
+      "target": "Earliest dated formal Sadie representation/action state before 14 Oct 2016",
+      "notes": "Accept only Sadie-specific action/role evidence: represented by, client roster, agent/manager contact block, submission/booking attribution, appointment sender, or equivalent formal state. Mere thanks, co-mentions, neighboring clients, event attendance or professional-support association do not establish representation. Preserve earliest dated capture and exact wording.",
+      "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82"
     }
   ],
-  "run_requested_at": "2026-09-27T17:00:00+05:00"
+  "run_requested_at": "2026-09-27T17:41:00+05:00"
 }
