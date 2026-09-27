@@ -64,11 +64,19 @@ jobs:
           printf '%s\n' "${GITHUB_RUN_ID}" > reports/latest/run_id.txt
           git config user.name "sadie-recovery-bot"
           git config user.email "actions@users.noreply.github.com"
+          if git diff --quiet -- reports/latest && git diff --cached --quiet -- reports/latest; then
+            exit 0
+          fi
+          mkdir -p /tmp/sadie-recovery-report
+          cp -a reports/latest/. /tmp/sadie-recovery-report/
+          git fetch origin main
+          git reset --hard origin/main
+          rm -rf reports/latest
+          mkdir -p reports/latest
+          cp -a /tmp/sadie-recovery-report/. reports/latest/
           git add reports/latest
           if ! git diff --cached --quiet; then
             git commit -m "chore: persist recovery report [skip ci]"
-            git fetch origin main
-            git rebase origin/main
             git push origin HEAD:main
           fi
 
