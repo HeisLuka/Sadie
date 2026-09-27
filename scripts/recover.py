@@ -82,12 +82,15 @@ def youtube_transcript(url,d):
     return r
 
 def extract_vtt_fragments(url,d):
-    meta=sh(["yt-dlp","--skip-download","--no-playlist","-J",url],timeout=300)
-    out={"metadata":meta,"playlist":None,"fragments":[]}
-    if meta["returncode"]!=0:
+    out={"metadata":None,"playlist":None,"fragments":[]}
+    meta_run=sh(["yt-dlp","--skip-download","--no-playlist","--write-info-json",
+                 "-o",str(d/"media.%(ext)s"),url],timeout=300)
+    out["metadata"]=meta_run
+    info_files=sorted(d.glob("media*.info.json"))
+    if meta_run["returncode"]!=0 or not info_files:
         return out
     try:
-        info=json.loads(meta["stdout"])
+        info=json.loads(info_files[0].read_text(encoding="utf-8",errors="replace"))
     except Exception as e:
         out["parse_error"]=repr(e); return out
     subs=info.get("subtitles") or {}
