@@ -174,7 +174,7 @@ def process_url(item,d):
         meta["direct"]=fetch(url,p)
     except Exception as e:
         meta["direct_error"]=repr(e)
-        meta["archive_fallback"]=archive_fallback(url,d)
+        meta["archive_fallback"]=archive_fallback(url,d)\n        meta["variant_probes"]=probe_variants(url,d)
     if item.get("kind")=="video":
         meta["subtitles"]=extract_vtt_fragments(url,d)
         meta["youtube_transcript_api"]=youtube_transcript(url,d)
