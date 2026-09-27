@@ -82,21 +82,52 @@ def youtube_transcript(url,d):
     return r
 
 def extract_vtt_fragments(url,d):
-    # Keep raw subtitle fragments; do not ask yt-dlp/ffmpeg to normalize malformed timestamps.
-    r=sh(["yt-dlp","--skip-download","--write-info-json","--write-subs","--write-auto-subs",
-          "--sub-langs","en.*,en","--sub-format","vtt","--no-playlist",
-          "-o",str(d/"media.%(ext)s"),url],timeout=600)
-    manifest=[]
-    for p in sorted(d.glob("*.vtt")):
-        txt=p.read_text(encoding="utf-8",errors="replace")
-        cleaned=[]
-        for line in txt.splitlines():
-            line=re.sub(r"(\d\d:\d\d:\d\d)\.(\d{3})\d+",r"\1.\2",line)
-            cleaned.append(line)
-        cp=p.with_name(p.stem+".clean.vtt")
-        cp.write_text("\n".join(cleaned)+"\n",encoding="utf-8")
-        manifest.append({"file":p.name,"bytes":p.stat().st_size,"clean_file":cp.name})
-    return {"ytdlp":r,"vtt_files":manifest}
+    meta=sh(["yt-dlp","--skip-download","--no-playlist","-J",url],timeout=300)
+    out={"metadata":meta,"playlist":None,"fragments":[]}
+    if meta["returncode"]!=0:
+        return out
+    try:
+        info=json.loads(meta["stdout"])
+    except Exception as e:
+        out["parse_error"]=repr(e); return out
+    subs=info.get("subtitles") or {}
+    tracks=subs.get("en") or []
+    track=next((x for x in tracks if x.get("ext")=="vtt" and x.get("url")), None)
+    if not track:
+        out["available_subtitle_keys"]=list(subs.keys())
+        return out
+    sub_url=track["url"]
+    out["playlist_url"]=sub_url
+    try:
+        playlist_path=d/"subtitle_playlist.m3u8"
+        out["playlist"]=fetch(sub_url,playlist_path,timeout=120)
+        playlist=playlist_path.read_text(encoding="utf-8",errors="replace")
+    except Exception as e:
+        out["playlist_error"]=repr(e); return out
+    frag_urls=[urllib.parse.urljoin(sub_url,line.strip()) for line in playlist.splitlines() if line.strip() and not line.startswith("#")]
+    blocks=[]
+    for i,frag_url in enumerate(frag_urls,1):
+        try:
+            p=d/f"subtitle_frag_{i:03d}.vtt"
+            m=fetch(frag_url,p,timeout=60)
+            txt=p.read_text(encoding="utf-8",errors="replace")
+            txt=re.sub(r"(\d\d:\d\d:\d\d)\.(\d{3})\d+",r"\1.\2",txt)
+            blocks.append(txt)
+            out["fragments"].append({"index":i,"url":frag_url,**m})
+        except Exception as e:
+            out["fragments"].append({"index":i,"url":frag_url,"error":repr(e)})
+    if blocks:
+        merged=["WEBVTT",""]
+        for txt in blocks:
+            lines=txt.splitlines()
+            if lines and lines[0].strip()=="WEBVTT":
+                lines=lines[1:]
+            merged.extend(lines)
+        merged_path=d/"subtitle_merged.clean.vtt"
+        merged_path.write_text("\n".join(merged)+"\n",encoding="utf-8")
+        out["merged_file"]=merged_path.name
+        out["merged_bytes"]=merged_path.stat().st_size
+    return out
 
 def process_url(item,d):
     url=item["url"]; meta={}
