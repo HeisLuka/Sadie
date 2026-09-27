@@ -3,131 +3,13 @@
   "generated_at": "2026-09-27",
   "items": [
     {
-      "id": "SRC-25",
-      "priority": "P0",
-      "kind": "archive_media",
-      "url": "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
-      "archive_queries": [
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov"
-      ],
-      "cc_first_index": "CC-MAIN-2013-48",
-      "cc_followups": 7,
-      "target": "Ep_20-QuickTime_H.264.mov",
-      "notes": "Broadway.com Show Ep.20; exact historical Libsyn href recovered in Notion. Recover bytes or archived response/redirect chain; current 404 is not a historical negative.",
-      "notion": "https://app.notion.com/p/3d132a84beec817980e4f2b4cad40d47"
-    },
-    {
-      "id": "SRC-28",
-      "priority": "P0",
-      "kind": "archive_media",
-      "url": "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
-      "archive_queries": [
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
-        "https://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov"
-      ],
-      "cc_first_index": "CC-MAIN-2013-48",
-      "cc_followups": 7,
-      "target": "Ep_22-QuickTime_H.264.mov",
-      "notes": "Broadway.com Show Ep.22; exact historical Libsyn href recovered in Notion. Recover bytes or archived response/redirect chain; current 404 is not a historical negative.",
-      "notion": "https://app.notion.com/p/3d132a84beec817980e4f2b4cad40d47"
-    },
-    {
-      "id": "SRC-44",
-      "priority": "P0",
-      "kind": "archive_media",
-      "urls": [
-        "https://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
-        "https://player.waywire.com/?id=12GSRS094YW79MDL"
-      ],
-      "archive_queries": [
-        "https://player.waywire.com/api/queue?id=12GSRS094YW79MDL&page=1",
-        "https://player.waywire.com/?id=12GSRS094YW79MDL",
-        "*.tvinsider.com/*12GSRS094YW79MDL*"
-      ],
-      "cc_first_index": "CC-MAIN-2015-18",
-      "cc_followups": 7,
-      "target": "12GSRS094YW79MDL",
-      "notes": "TV Insider historical Waywire CID. Preserve archived queue JSON/player HTML and follow only provider/media URLs actually observed in recovered state.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8168a619e53be72cae9e"
-    },
-    {
-      "id": "SRC-48",
-      "priority": "P0",
-      "kind": "archive_media",
-      "urls": [
-        "https://www.nbc.com/american-odyssey/video/bug-out/2867948",
-        "https://www.nbc.com/american-odyssey/video/sneak-peek-suzanne-breaks-down/2875083",
-        "https://link.theplatform.com/s/NnzsPC/media/guid/2410887629/2875083?format=preview"
-      ],
-      "archive_queries": [
-        "https://www.nbc.com/american-odyssey/video/bug-out/2867948",
-        "https://www.nbc.com/american-odyssey/video/sneak-peek-suzanne-breaks-down/2875083",
-        "*2875083*Sneak_Peek__Suzanne_Breaks_Down*"
-      ],
-      "cc_first_index": "CC-MAIN-2015-27",
-      "cc_followups": 5,
-      "target": "2867948 / MPX 2875083",
-      "notes": "NBC publisher object 2867948 maps to terminal MPX media 2875083. Recover historical response/CDN edge or exact payload; preserve 82s runtime and provenance boundaries.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81eba1d7f96c44ad698f"
-    },
-    {
-      "id": "TASK-32",
-      "priority": "P0",
-      "kind": "archive_page",
-      "url": "https://www.newyork.com/articles/broadway/a-day-in-the-life-of-taylor-richardson-and-sadie-sink-stars-of-annie-56345/",
-      "archive_queries": [
-        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
-        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
-        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
-      ],
-      "cc_first_index": "CC-MAIN-2013-48",
-      "cc_followups": 7,
-      "target": "NewYork.com article 56345 residual embedded images",
-      "notes": "Article body recovered 2026-09-27 from CC-MAIN-2013-48. Residual DoD only: recover/reconcile three exact embedded image assets, then close TASK-32.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de",
-      "urls": [
-        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
-        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
-        "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg"
-      ]
-    },
-    {
-      "id": "TASK-272-SRC-354",
-      "priority": "P1",
-      "kind": "video",
-      "url": "https://www.youtube.com/watch?v=9aVMqQffD4s",
-      "notes": "Tonight Show / You Read My Mind. Acquire public media metadata, captions/subtitles and playable bytes where yt-dlp exposes them.",
-      "notion": "https://app.notion.com/p/3ce32a84beec8120a400d980e3eee96a"
-    },
-    {
       "id": "HUM-3",
-      "priority": "P1",
+      "priority": "P0",
       "kind": "video",
       "url": "https://www.giants.com/video/eli-s-extras-sadie-sink-taylor-swift-music-video-eli-manning-bake-off",
-      "notes": "Agent-owned. Recover playable/captioned manifestation and transcript/timestamps from public surfaces.",
+      "notes": "Agent-owned. Recover playable/captioned manifestation and transcript/timestamps from public surfaces. Focused 2026-09-27 pass: recover all English subtitle HLS segments independently, normalize malformed WebVTT, merge full transcript; do not spend runner time on unrelated queue items.",
       "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f"
-    },
-    {
-      "id": "CAN-91",
-      "priority": "P1",
-      "kind": "image",
-      "url": "https://i2.hdslb.com/bfs/storyff/_00002q0kg61hrm8y5299pt2hu9ynxsb_firsti.jpg",
-      "notes": "Exact Bilibili first frame; prior runtime hit 403. Recover pixels and metadata only.",
-      "notion": "https://app.notion.com/p/3d532a84beec818a8ae1dbae610ca38e"
-    },
-    {
-      "id": "HUM-12",
-      "priority": "P1",
-      "kind": "page",
-      "url": "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567",
-      "archive_queries": [
-        "https://sadiesinkfan.com/gallery/displayimage.php?pid=2567"
-      ],
-      "cc_followups": 2,
-      "notes": "Do not treat a failed request as negative. Seek image-bearing alternate object/raw thumbnail/archive route.",
-      "notion": "https://app.notion.com/p/3cc32a84beec810ba3e6efc57374c64f"
     }
   ],
-  "run_requested_at": "2026-09-27T14:05:00+05:00"
+  "run_requested_at": "2026-09-27T15:38:00+05:00"
 }
