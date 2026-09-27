@@ -1,30 +1,42 @@
 #!/usr/bin/env python3
-import json, os, re, hashlib, subprocess, sys, urllib.request, urllib.parse
+import json, re, hashlib, subprocess, urllib.request, urllib.parse
 from pathlib import Path
 
 ROOT=Path("recovery")
 ROOT.mkdir(exist_ok=True)
 UA="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/128 Safari/537.36"
 
-def sh(cmd, cwd=None, timeout=900):
-    p=subprocess.run(cmd,cwd=cwd,text=True,capture_output=True,timeout=timeout)
+def sh(cmd, timeout=900):
+    p=subprocess.run(cmd,text=True,capture_output=True,timeout=timeout)
     return {"cmd":cmd,"returncode":p.returncode,"stdout":p.stdout[-20000:],"stderr":p.stderr[-20000:]}
 
 def safe(s):
     return re.sub(r"[^A-Za-z0-9_.-]+","_",s)[:100]
 
-def hash_file(p):
-    h=hashlib.sha256()
-    with open(p,"rb") as f:
-        for b in iter(lambda:f.read(1024*1024),b""): h.update(b)
-    return h.hexdigest()
-
-def fetch(url,out):
+def fetch(url,out,timeout=60):
     req=urllib.request.Request(url,headers={"User-Agent":UA,"Accept":"*/*"})
-    with urllib.request.urlopen(req,timeout=60) as r:
+    with urllib.request.urlopen(req,timeout=timeout) as r:
         data=r.read()
         out.write_bytes(data)
         return {"final_url":r.geturl(),"status":getattr(r,"status",None),"headers":dict(r.headers),"bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()}
+
+def youtube_transcript(url,d):
+    m=re.search(r"(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})",url)
+    if not m:
+        return {"skipped":"not youtube"}
+    vid=m.group(1)
+    code=(
+      "from youtube_transcript_api import YouTubeTranscriptApi\n"
+      f"vid={vid!r}\n"
+      "api=YouTubeTranscriptApi()\n"
+      "items=api.fetch(vid)\n"
+      "import json\n"
+      "print(json.dumps([{'text':x.text,'start':x.start,'duration':x.duration} for x in items],ensure_ascii=False))\n"
+    )
+    r=sh(["python","-c",code],timeout=180)
+    if r["returncode"]==0:
+        (d/"youtube_transcript.json").write_text(r["stdout"],encoding="utf-8")
+    return r
 
 def process_url(item,d):
     url=item["url"]
@@ -35,23 +47,52 @@ def process_url(item,d):
     except Exception as e:
         meta["direct_error"]=repr(e)
     if item.get("kind")=="video":
-        meta["ytdlp"]=sh(["yt-dlp","--write-info-json","--write-subs","--write-auto-subs","--sub-langs","all,-live_chat","--convert-subs","vtt","--no-playlist","-o",str(d/"media.%(ext)s"),url],timeout=1200)
+        meta["ytdlp_metadata_subs"]=sh([
+          "yt-dlp","--skip-download","--write-info-json","--write-subs","--write-auto-subs",
+          "--sub-langs","all,-live_chat","--convert-subs","vtt","--no-playlist",
+          "-o",str(d/"media.%(ext)s"),url
+        ],timeout=600)
+        meta["youtube_transcript_api"]=youtube_transcript(url,d)
     return meta
+
+def wayback_query(query,d,name):
+    u="https://web.archive.org/cdx/search/cdx?"+urllib.parse.urlencode({
+      "url":query,"output":"json","filter":"statuscode:200","collapse":"digest","limit":"100"
+    })
+    p=d/name
+    try:
+        return {"url":u,**fetch(u,p,timeout=120)}
+    except Exception as e:
+        return {"url":u,"error":repr(e)}
+
+def commoncrawl_query(query,d,name,index="CC-MAIN-2026-38"):
+    u=f"https://index.commoncrawl.org/{index}-index?"+urllib.parse.urlencode({
+      "url":query,"output":"json","filter":"status:200"
+    })
+    p=d/name
+    try:
+        return {"url":u,**fetch(u,p,timeout=120)}
+    except Exception as e:
+        return {"url":u,"error":repr(e)}
 
 def archive_probe(item,d):
     target=item["target"]
-    q=urllib.parse.quote(target,safe="")
-    endpoints=[
-      "https://web.archive.org/cdx/search/cdx?url=*"+q+"*&output=json&filter=statuscode:200&collapse=digest&limit=100",
-      "https://index.commoncrawl.org/collinfo.json"
-    ]
-    out=[]
-    for i,u in enumerate(endpoints):
-        try:
-            p=d/f"archive_probe_{i}.txt"
-            m=fetch(u,p); out.append({"url":u,**m})
-        except Exception as e: out.append({"url":u,"error":repr(e)})
-    return out
+    probes=[]
+    if target.endswith((".mov",".mp4",".mp3",".m3u")):
+        probes.append(wayback_query("*"+target+"*",d,"wayback_filename.txt"))
+        probes.append(commoncrawl_query("*"+target+"*",d,"cc_filename.txt","CC-MAIN-2013-48"))
+    elif target=="12GSRS094YW79MDL":
+        probes.append(wayback_query("*12GSRS094YW79MDL*",d,"wayback_waywire.txt"))
+        probes.append(commoncrawl_query("*12GSRS094YW79MDL*",d,"cc_waywire.txt","CC-MAIN-2015-18"))
+    elif target=="2867948":
+        probes.append(wayback_query("*2867948*",d,"wayback_nbc.txt"))
+        probes.append(commoncrawl_query("*2867948*",d,"cc_nbc.txt","CC-MAIN-2015-14"))
+    elif "NewYork.com" in target:
+        probes.append(wayback_query("newyork.com/articles/broadway/a-day-in-the-life-of-annie-star-sadie-sink*",d,"wayback_newyork.txt"))
+        probes.append(commoncrawl_query("newyork.com/*56345*",d,"cc_newyork.txt","CC-MAIN-2013-48"))
+    else:
+        probes.append(wayback_query("*"+target+"*",d,"wayback_generic.txt"))
+    return probes
 
 def derive(d):
     logs={}
@@ -76,4 +117,6 @@ def main():
         (d/"result.json").write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
         summary.append({"id":item["id"],"dir":str(d)})
     (ROOT/"summary.json").write_text(json.dumps(summary,ensure_ascii=False,indent=2),encoding="utf-8")
-if __name__=="__main__": main()
+
+if __name__=="__main__":
+    main()
