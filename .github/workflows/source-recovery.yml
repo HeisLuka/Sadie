@@ -11,6 +11,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: sadie-source-recovery-main
+  cancel-in-progress: true
+
 jobs:
   recover:
     runs-on: ubuntu-latest
@@ -22,7 +26,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y p7zip-full poppler-utils tesseract-ocr ffmpeg file
-          python -m pip install --upgrade yt-dlp
+          python -m pip install --upgrade yt-dlp beautifulsoup4 warcio
 
       - name: Run recovery queue
         run: python scripts/recover.py
@@ -30,13 +34,23 @@ jobs:
       - name: Build compact manifest
         if: always()
         run: |
-          find recovery -maxdepth 2 -type f -printf '%p %s bytes\n' | sort > recovery/MANIFEST.txt || true
+          mkdir -p recovery
+          find recovery -maxdepth 3 -type f -printf '%p %s bytes\n' | sort > recovery/MANIFEST.txt || true
+
+      - name: Publish recovery summary
+        if: always()
+        run: |
+          if [ -f recovery/REPORT.md ]; then
+            cat recovery/REPORT.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Recovery report was not produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Upload recovered objects and evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sadie-source-recovery
+          name: sadie-source-recovery-${{ github.run_id }}
           path: recovery/
           if-no-files-found: warn
           retention-days: 30
