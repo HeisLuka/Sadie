@@ -1,47 +1,15 @@
 {
-  "generated_from": "Sadie Research HQ",
-  "generated_at": "2026-09-27",
+  "generated_from": "Sadie Research HQ / TASK-94",
+  "generated_at": "2026-09-28",
   "items": [
     {
-      "id": "SRC-25",
+      "id": "TASK-94-LIBSYN-FEED",
       "priority": "P0",
-      "kind": "binary",
-      "url": "http://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
-      "notes": "Observed first-party historical Libsyn direct-download href. Recover redirect/enclosure history or MOV bytes.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8168b27cd39b78102d6a"
-    },
-    {
-      "id": "SRC-28",
-      "priority": "P0",
-      "kind": "binary",
-      "url": "http://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
-      "notes": "Observed first-party historical Libsyn direct-download href. Recover redirect/enclosure history or MOV bytes.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8152b9b3c8d75eabb3d8"
-    },
-    {
-      "id": "SRC-44",
-      "priority": "P0",
-      "kind": "page",
-      "url": "https://player.waywire.com/?id=12GSRS094YW79MDL",
-      "notes": "Historical observed Waywire player. Preserve response and mine object/API/media references.",
-      "notion": "https://app.notion.com/p/3cc32a84beec814e8e81ea9722f19cd0"
-    },
-    {
-      "id": "SRC-48-BWW",
-      "priority": "P0",
-      "kind": "page",
-      "url": "https://www.broadwayworld.com/videoembed.php?colid=1038232",
-      "notes": "Observed BWW wrapper for Bug Out. Mine downstream player URLs.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8123a82afa3c193a0bbf"
-    },
-    {
-      "id": "SRC-48-MPX",
-      "priority": "P0",
-      "kind": "page",
-      "url": "https://player.theplatform.com/p/NnzsPC/widget/select/media/guid/2410887629/2875083?form=html",
-      "notes": "Observed terminal ThePlatform/MPX player route; attempt metadata/media URL recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8123a82afa3c193a0bbf"
+      "kind": "libsyn_feed_audit",
+      "url": "https://broadwaycomshow.libsyn.com/rss",
+      "notes": "Recover historical RSS/XML/enclosure carrier and redirect metadata for exact Ep20/Ep22 MOV anchors; do not guess new filenames.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5"
     }
   ],
-  "run_requested_at": "2026-09-27T23:05:00+05:00"
+  "run_requested_at": "2026-09-28T06:22:00+05:00"
 }
