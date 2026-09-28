@@ -1,15 +1,23 @@
 {
-  "generated_from": "Sadie Research HQ / TASK-94",
+  "generated_from": "Sadie Research HQ / TASK-94 live RSS enclosure recovery",
   "generated_at": "2026-09-28",
   "items": [
     {
-      "id": "TASK-94-LIBSYN-FEED",
+      "id": "SRC-25-SECURE",
       "priority": "P0",
-      "kind": "libsyn_feed_audit",
-      "url": "https://broadwaycomshow.libsyn.com/rss",
-      "notes": "Recover historical RSS/XML/enclosure carrier and redirect metadata for exact Ep20/Ep22 MOV anchors; do not guess new filenames.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8118a43ec0941a777be5"
+      "kind": "binary",
+      "url": "https://traffic.libsyn.com/secure/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129040",
+      "notes": "Exact live RSS enclosure; fetch bytes and preserve final redirect/headers.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8168b27cd39b78102d6a"
+    },
+    {
+      "id": "SRC-28-SECURE",
+      "priority": "P0",
+      "kind": "binary",
+      "url": "https://traffic.libsyn.com/secure/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129040",
+      "notes": "Exact live RSS enclosure; fetch bytes and preserve final redirect/headers.",
+      "notion": "https://app.notion.com/p/3cc32a84beec8152b9b3c8d75eabb3d8"
     }
   ],
-  "run_requested_at": "2026-09-28T06:22:00+05:00"
+  "run_requested_at": "2026-09-28T06:35:00+05:00"
 }
