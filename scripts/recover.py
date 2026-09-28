@@ -101,6 +101,58 @@ def mine_text_urls(path):
         return []
     urls=re.findall(r'https?://[^"\'<>\s]+',txt)
     return sorted(set(urls))
+
+def wayback_window(url,d,prefix,from_year="2013",to_year="2014"):
+    api="https://web.archive.org/cdx/search/cdx?"+urllib.parse.urlencode({
+      "url":url,"output":"json","filter":"statuscode:200","collapse":"digest",
+      "fl":"timestamp,original,statuscode,mimetype,digest,length",
+      "from":from_year,"to":to_year,"limit":"200"
+    })
+    out={"cdx_url":api}
+    try:
+        p=d/(prefix+"_cdx_window.json")
+        out["cdx"]=fetch(api,p,timeout=120)
+        rows=json.loads(p.read_text(encoding="utf-8",errors="replace"))
+        out["rows"]=rows[1:] if isinstance(rows,list) and len(rows)>1 else []
+        if out["rows"]:
+            ts=out["rows"][0][0]
+            replay=f"https://web.archive.org/web/{ts}id_/{url}"
+            rp=d/(prefix+"_first_capture.bin")
+            try:
+                out["first_replay"]=fetch(replay,rp,timeout=180)
+            except Exception as e:
+                out["first_replay_error"]=repr(e)
+    except Exception as e:
+        out["error"]=repr(e)
+    return out
+
+def libsyn_feed_probe(d):
+    urls=[
+      "https://broadwaycomshow.libsyn.com/rss",
+      "http://broadwaycomshow.libsyn.com/rss",
+      "https://broadwaycomshow.libsyn.com/rss?destination_id=129042",
+      "http://broadwaycomshow.libsyn.com/rss?destination_id=129042",
+      "https://broadwaycomshow.libsyn.com/feed",
+      "http://broadwaycomshow.libsyn.com/feed",
+      "https://broadwaycomshow.libsyn.com/webpage/2013",
+      "http://broadwaycomshow.libsyn.com/webpage/2013"
+    ]
+    needles=["Ep_20-QuickTime_H.264.mov","Ep_22-QuickTime_H.264.mov","dest-id=129042","<enclosure","<guid"]
+    results=[]
+    for i,u in enumerate(urls,1):
+        ent={"url":u}
+        try:
+            p=d/f"feed_{i:02d}.bin"
+            ent["live"]=fetch(u,p,timeout=90)
+            txt=p.read_text(encoding="utf-8",errors="replace")
+            ent["matches"]={n:(n in txt) for n in needles}
+            ent["matching_lines"]=[line[:1000] for line in txt.splitlines() if any(n in line for n in needles)][:50]
+            ent["urls"]=mine_text_urls(p)[:200]
+        except Exception as e:
+            ent["live_error"]=repr(e)
+        ent["wayback_2013_2014"]=wayback_window(u,d,f"feed_{i:02d}","2013","2014")
+        results.append(ent)
+    return results
 def youtube_transcript(url,d):
     m=re.search(r"(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})",url)
     if not m: return {"skipped":"not youtube"}
