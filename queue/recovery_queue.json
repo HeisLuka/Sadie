@@ -1,87 +1,23 @@
 {
-  "generated_from": "Sadie Research HQ",
-  "generated_at": "2026-09-27",
+  "generated_from": "Sadie Research HQ / TASK-94 live RSS enclosure recovery",
+  "generated_at": "2026-09-28",
   "items": [
     {
-      "id": "SRC-25",
+      "id": "SRC-25-SECURE",
       "priority": "P0",
       "kind": "binary",
-      "url": "http://traffic.libsyn.com/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129042",
-      "notes": "Observed first-party historical Libsyn direct-download href. Recover redirect/enclosure history or MOV bytes.",
+      "url": "https://traffic.libsyn.com/secure/broadwaycomshow/Ep_20-QuickTime_H.264.mov?dest-id=129040",
+      "notes": "Exact live RSS enclosure; fetch bytes and preserve final redirect/headers.",
       "notion": "https://app.notion.com/p/3cc32a84beec8168b27cd39b78102d6a"
     },
     {
-      "id": "SRC-28",
+      "id": "SRC-28-SECURE",
       "priority": "P0",
       "kind": "binary",
-      "url": "http://traffic.libsyn.com/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129042",
-      "notes": "Observed first-party historical Libsyn direct-download href. Recover redirect/enclosure history or MOV bytes.",
+      "url": "https://traffic.libsyn.com/secure/broadwaycomshow/Ep_22-QuickTime_H.264.mov?dest-id=129040",
+      "notes": "Exact live RSS enclosure; fetch bytes and preserve final redirect/headers.",
       "notion": "https://app.notion.com/p/3cc32a84beec8152b9b3c8d75eabb3d8"
-    },
-    {
-      "id": "SRC-44",
-      "priority": "P0",
-      "kind": "page",
-      "url": "https://player.waywire.com/?id=12GSRS094YW79MDL",
-      "notes": "Historical observed Waywire player. Preserve response and mine object/API/media references.",
-      "notion": "https://app.notion.com/p/3cc32a84beec814e8e81ea9722f19cd0"
-    },
-    {
-      "id": "SRC-48-BWW",
-      "priority": "P0",
-      "kind": "page",
-      "url": "https://www.broadwayworld.com/videoembed.php?colid=1038232",
-      "notes": "Observed BWW wrapper for Bug Out. Mine downstream player URLs.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8123a82afa3c193a0bbf"
-    },
-    {
-      "id": "SRC-48-MPX",
-      "priority": "P0",
-      "kind": "page",
-      "url": "https://player.theplatform.com/p/NnzsPC/widget/select/media/guid/2410887629/2875083?form=html",
-      "notes": "Observed terminal ThePlatform/MPX player route; attempt metadata/media URL recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec8123a82afa3c193a0bbf"
-    },
-    {
-      "id": "TASK-32-IMG1",
-      "priority": "P0",
-      "kind": "image",
-      "url": "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-logo_450.jpg",
-      "notes": "Residual exact image-byte recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
-    },
-    {
-      "id": "TASK-32-IMG2",
-      "priority": "P0",
-      "kind": "image",
-      "url": "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie_650.jpg",
-      "notes": "Residual exact image-byte recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
-    },
-    {
-      "id": "TASK-32-IMG3",
-      "priority": "P0",
-      "kind": "image",
-      "url": "http://www.newyork.com/articles/wp-content/uploads/2013/09/annie-headshots_650.jpg",
-      "notes": "Residual exact image-byte recovery.",
-      "notion": "https://app.notion.com/p/3cc32a84beec811e86c3c9bd0d7709de"
-    },
-    {
-      "id": "HUM-3",
-      "priority": "P1",
-      "kind": "video",
-      "url": "https://www.giants.com/video/eli-s-extras-sadie-sink-taylor-swift-music-video-eli-manning-bake-off",
-      "notes": "Recover metadata and English subtitles without full video.",
-      "notion": "https://app.notion.com/p/3cc32a84beec81cbbb35ec1f3990f21f"
-    },
-    {
-      "id": "TASK-272-SRC-354",
-      "priority": "P1",
-      "kind": "video",
-      "url": "https://www.youtube.com/watch?v=9aVMqQffD4s",
-      "notes": "Try transcript API plus metadata/subtitle-only extraction.",
-      "notion": "https://app.notion.com/p/3ce32a84beec8120a400d980e3eee96a"
     }
   ],
-  "run_requested_at": "2026-09-27T16:06:00+05:00"
+  "run_requested_at": "2026-09-28T06:35:00+05:00"
 }

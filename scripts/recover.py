@@ -66,6 +66,93 @@ def archive_fallback(url,d):
       "commoncrawl":cc_exact(url,d,"exact_cc",indexes)
     }
 
+
+def candidate_variants(url):
+    out=[url]
+    if url.startswith("http://"): out.append("https://"+url[len("http://"):])
+    elif url.startswith("https://"): out.append("http://"+url[len("https://"):])
+    if "?" in url: out.append(url.split("?",1)[0])
+    if "traffic.libsyn.com" in url:
+        base=url.split("?",1)[0]
+        out += [
+          base.replace("traffic.libsyn.com","hwcdn.libsyn.com"),
+          base.replace("traffic.libsyn.com","media.libsyn.com"),
+          base.replace("traffic.libsyn.com","traffic.libsyn.com/secure"),
+        ]
+    return list(dict.fromkeys(out))
+
+def probe_variants(url,d):
+    results=[]
+    for i,u in enumerate(candidate_variants(url),1):
+        ent={"url":u}
+        try:
+            p=d/f"variant_{i:02d}.bin"
+            ent["live"]=fetch(u,p,timeout=60)
+        except Exception as e:
+            ent["live_error"]=repr(e)
+        ent["wayback"]=wayback_exact(u,d,f"variant_{i:02d}")
+        results.append(ent)
+    return results
+
+def mine_text_urls(path):
+    try:
+        txt=path.read_text(encoding="utf-8",errors="replace")
+    except Exception:
+        return []
+    urls=re.findall(r'https?://[^"\'<>\s]+',txt)
+    return sorted(set(urls))
+
+def wayback_window(url,d,prefix,from_year="2013",to_year="2014"):
+    api="https://web.archive.org/cdx/search/cdx?"+urllib.parse.urlencode({
+      "url":url,"output":"json","filter":"statuscode:200","collapse":"digest",
+      "fl":"timestamp,original,statuscode,mimetype,digest,length",
+      "from":from_year,"to":to_year,"limit":"200"
+    })
+    out={"cdx_url":api}
+    try:
+        p=d/(prefix+"_cdx_window.json")
+        out["cdx"]=fetch(api,p,timeout=120)
+        rows=json.loads(p.read_text(encoding="utf-8",errors="replace"))
+        out["rows"]=rows[1:] if isinstance(rows,list) and len(rows)>1 else []
+        if out["rows"]:
+            ts=out["rows"][0][0]
+            replay=f"https://web.archive.org/web/{ts}id_/{url}"
+            rp=d/(prefix+"_first_capture.bin")
+            try:
+                out["first_replay"]=fetch(replay,rp,timeout=180)
+            except Exception as e:
+                out["first_replay_error"]=repr(e)
+    except Exception as e:
+        out["error"]=repr(e)
+    return out
+
+def libsyn_feed_probe(d):
+    urls=[
+      "https://broadwaycomshow.libsyn.com/rss",
+      "http://broadwaycomshow.libsyn.com/rss",
+      "https://broadwaycomshow.libsyn.com/rss?destination_id=129042",
+      "http://broadwaycomshow.libsyn.com/rss?destination_id=129042",
+      "https://broadwaycomshow.libsyn.com/feed",
+      "http://broadwaycomshow.libsyn.com/feed",
+      "https://broadwaycomshow.libsyn.com/webpage/2013",
+      "http://broadwaycomshow.libsyn.com/webpage/2013"
+    ]
+    needles=["Ep_20-QuickTime_H.264.mov","Ep_22-QuickTime_H.264.mov","dest-id=129042","<enclosure","<guid"]
+    results=[]
+    for i,u in enumerate(urls,1):
+        ent={"url":u}
+        try:
+            p=d/f"feed_{i:02d}.bin"
+            ent["live"]=fetch(u,p,timeout=90)
+            txt=p.read_text(encoding="utf-8",errors="replace")
+            ent["matches"]={n:(n in txt) for n in needles}
+            ent["matching_lines"]=[line[:1000] for line in txt.splitlines() if any(n in line for n in needles)][:50]
+            ent["urls"]=mine_text_urls(p)[:200]
+        except Exception as e:
+            ent["live_error"]=repr(e)
+        ent["wayback_2013_2014"]=wayback_window(u,d,f"feed_{i:02d}","2013","2014")
+        results.append(ent)
+    return results
 def youtube_transcript(url,d):
     m=re.search(r"(?:v=|youtu\.be/)([A-Za-z0-9_-]{11})",url)
     if not m: return {"skipped":"not youtube"}
@@ -82,21 +169,55 @@ def youtube_transcript(url,d):
     return r
 
 def extract_vtt_fragments(url,d):
-    # Keep raw subtitle fragments; do not ask yt-dlp/ffmpeg to normalize malformed timestamps.
-    r=sh(["yt-dlp","--skip-download","--write-info-json","--write-subs","--write-auto-subs",
-          "--sub-langs","en.*,en","--sub-format","vtt","--no-playlist",
-          "-o",str(d/"media.%(ext)s"),url],timeout=600)
-    manifest=[]
-    for p in sorted(d.glob("*.vtt")):
-        txt=p.read_text(encoding="utf-8",errors="replace")
-        cleaned=[]
-        for line in txt.splitlines():
-            line=re.sub(r"(\d\d:\d\d:\d\d)\.(\d{3})\d+",r"\1.\2",line)
-            cleaned.append(line)
-        cp=p.with_name(p.stem+".clean.vtt")
-        cp.write_text("\n".join(cleaned)+"\n",encoding="utf-8")
-        manifest.append({"file":p.name,"bytes":p.stat().st_size,"clean_file":cp.name})
-    return {"ytdlp":r,"vtt_files":manifest}
+    out={"metadata":None,"playlist":None,"fragments":[]}
+    meta_run=sh(["yt-dlp","--skip-download","--no-playlist","--write-info-json",
+                 "-o",str(d/"media.%(ext)s"),url],timeout=300)
+    out["metadata"]=meta_run
+    info_files=sorted(d.glob("media*.info.json"))
+    if meta_run["returncode"]!=0 or not info_files:
+        return out
+    try:
+        info=json.loads(info_files[0].read_text(encoding="utf-8",errors="replace"))
+    except Exception as e:
+        out["parse_error"]=repr(e); return out
+    subs=info.get("subtitles") or {}
+    tracks=subs.get("en") or []
+    track=next((x for x in tracks if x.get("ext")=="vtt" and x.get("url")), None)
+    if not track:
+        out["available_subtitle_keys"]=list(subs.keys())
+        return out
+    sub_url=track["url"]
+    out["playlist_url"]=sub_url
+    try:
+        playlist_path=d/"subtitle_playlist.m3u8"
+        out["playlist"]=fetch(sub_url,playlist_path,timeout=120)
+        playlist=playlist_path.read_text(encoding="utf-8",errors="replace")
+    except Exception as e:
+        out["playlist_error"]=repr(e); return out
+    frag_urls=[urllib.parse.urljoin(sub_url,line.strip()) for line in playlist.splitlines() if line.strip() and not line.startswith("#")]
+    blocks=[]
+    for i,frag_url in enumerate(frag_urls,1):
+        try:
+            p=d/f"subtitle_frag_{i:03d}.vtt"
+            m=fetch(frag_url,p,timeout=60)
+            txt=p.read_text(encoding="utf-8",errors="replace")
+            txt=re.sub(r"(\d\d:\d\d:\d\d)\.(\d{3})\d+",r"\1.\2",txt)
+            blocks.append(txt)
+            out["fragments"].append({"index":i,"url":frag_url,**m})
+        except Exception as e:
+            out["fragments"].append({"index":i,"url":frag_url,"error":repr(e)})
+    if blocks:
+        merged=["WEBVTT",""]
+        for txt in blocks:
+            lines=txt.splitlines()
+            if lines and lines[0].strip()=="WEBVTT":
+                lines=lines[1:]
+            merged.extend(lines)
+        merged_path=d/"subtitle_merged.clean.vtt"
+        merged_path.write_text("\n".join(merged)+"\n",encoding="utf-8")
+        out["merged_file"]=merged_path.name
+        out["merged_bytes"]=merged_path.stat().st_size
+    return out
 
 def process_url(item,d):
     url=item["url"]; meta={}
@@ -106,6 +227,7 @@ def process_url(item,d):
     except Exception as e:
         meta["direct_error"]=repr(e)
         meta["archive_fallback"]=archive_fallback(url,d)
+        meta["variant_probes"]=probe_variants(url,d)
     if item.get("kind")=="video":
         meta["subtitles"]=extract_vtt_fragments(url,d)
         meta["youtube_transcript_api"]=youtube_transcript(url,d)
