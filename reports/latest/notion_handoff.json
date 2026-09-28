@@ -2,26 +2,24 @@
   "generated_by": "Sadie Source Recovery",
   "items": [
     {
-      "id": "TASK-312C-NANCY-EARLY",
+      "id": "TASK-312C-PARADIGM-EXACT-NODES",
       "priority": "P0",
-      "outcome": "not_found",
+      "outcome": "recovered_payload",
       "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82",
       "archive_hits": 0,
-      "recovered_files": [],
+      "recovered_files": [
+        "recovery/TASK-312C-PARADIGM-EXACT-NODES/direct_0.html"
+      ],
       "errors": [],
       "archive_evidence": [],
-      "payload_files": []
-    },
-    {
-      "id": "TASK-312C-MARA-PARADIGM",
-      "priority": "P0",
-      "outcome": "not_found",
-      "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82",
-      "archive_hits": 0,
-      "recovered_files": [],
-      "errors": [],
-      "archive_evidence": [],
-      "payload_files": []
+      "payload_files": [
+        {
+          "path": "recovery/TASK-312C-PARADIGM-EXACT-NODES/direct_0.html",
+          "bytes": 37936,
+          "sha256": "26ace95f2ce984aceaa5a9467c9240fbc5e73625eeb65d0f5fd5ff69b1cb44be",
+          "mime": "application/javascript"
+        }
+      ]
     }
   ]
 }

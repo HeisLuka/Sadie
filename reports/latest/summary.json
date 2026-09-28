@@ -1,25 +1,17 @@
 {
   "totals": {
-    "not_found": 2
+    "recovered_payload": 1
   },
   "items": [
     {
-      "id": "TASK-312C-NANCY-EARLY",
+      "id": "TASK-312C-PARADIGM-EXACT-NODES",
       "priority": "P0",
-      "outcome": "not_found",
-      "payload_count": 0,
+      "outcome": "recovered_payload",
+      "payload_count": 1,
       "archive_hits": 0,
-      "key_files": [],
-      "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82",
-      "errors": []
-    },
-    {
-      "id": "TASK-312C-MARA-PARADIGM",
-      "priority": "P0",
-      "outcome": "not_found",
-      "payload_count": 0,
-      "archive_hits": 0,
-      "key_files": [],
+      "key_files": [
+        "recovery/TASK-312C-PARADIGM-EXACT-NODES/direct_0.html"
+      ],
       "notion": "https://app.notion.com/p/3ce32a84beec810d838cc20e87ad3b82",
       "errors": []
     }
